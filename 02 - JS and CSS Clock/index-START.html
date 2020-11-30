@@ -60,15 +60,44 @@
       width: 50%;
       height: 6px;
       background: black;
+      transform-origin: 100%; 
+      /* 위치 시작 -> default:50 % -> 원점을 오른쪽 끝을 중심으로 회전 */
+      transform:rotate(90deg); 
+      /* 회전  */
       position: absolute;
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+      /* 시계침에 역동성 부여 */
       top: 50%;
     }
 
   </style>
 
-  <script>
+  <script> 
+    const secondHand = document.querySelector('.second-hand')
+    const minHand = document.querySelector('.min-hand')
+    const hourHand = document.querySelector('.hour-hand')
+    console.log(hourHand)
+    function setTime(){
 
+    const now = new Date()
+    const second = now.getSeconds()
+    const secondDegree = ((second/60)*360) + 90
 
+    const min = now.getMinutes();
+    const minDegrees = ((min/60) * 360) + ((second/60)*6) + 90;
+    const minDegree = ((min/60)*360) +((second/60)*6) +90
+    
+    const hour = now.getHours()
+    const hourDegree = ((hour/60)*360) + ((min/60)*30) +90 
+
+    secondHand.style.transform = `rotate(${secondDegree}deg)`
+    minHand.style.transform = `rotate(${minDegree}deg)`
+    hourHand.style.transform = `rotate(${hourDegree}deg)`
+
+    }
+    setInterval(setTime,1000)
+    setTime()
   </script>
 </body>
 </html>
